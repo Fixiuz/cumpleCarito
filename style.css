@@ -1,0 +1,326 @@
+/*
+ * --- VARIABLES DE DISEÑO (Paleta de Colores Femenina) ---
+ */
+:root {
+    --bg-color: #fdf2f8;
+    --card-front-bg: linear-gradient(135deg, #f4a5c3, #f7d08a);
+    --card-inside-bg: #ffffff;
+    --text-dark: #4b2c3a;
+    --text-light: #ffffff;
+    --accent-gold: #f7d08a;
+    --accent-pink: #f4a5c3;
+}
+
+/*
+ * --- CONFIGURACIÓN GENERAL ---
+ */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+    color: var(--text-dark);
+    perspective: 1500px;
+    position: relative;
+}
+
+/*
+ * --- VIDEO DE FONDO Y OVERLAY ---
+ */
+#background-video {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -2;
+    object-fit: cover;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: -1;
+}
+
+/*
+ * --- CONTENEDOR PRINCIPAL DE LA TARJETA ---
+ */
+.card-container {
+    width: 55vw;
+    height: 50vh;
+    max-width: 350px;
+    max-height: 450px;
+    position: relative;
+    /* cursor: pointer; <-- ELIMINADO de aquí */
+
+    /* Estado inicial (invisible) */
+    opacity: 0;
+    transform: scale(0.5) translateZ(-300px);
+    
+    /* Transición para la aparición */
+    transition: transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 1s ease-out;
+}
+
+/* Estado final (visible) */
+.card-container.visible {
+    opacity: 1;
+    transform: scale(1) translateZ(0);
+}
+
+
+/*
+ * --- EL ELEMENTO QUE ROTA ---
+ */
+.card {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    transform-style: preserve-3d;
+}
+
+/*
+ * --- ESTADO ABIERTO ---
+ */
+.card-container.open {
+    width: 90vw;
+    height: 80vh;
+    max-width: 500px;
+    max-height: 700px;
+    transition: all 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.card-container.open .card {
+    transform: rotateY(180deg);
+}
+
+/*
+ * --- CARAS DE LA TARJETA (FRENTE Y REVERSO) ---
+ */
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    text-align: center;
+}
+
+/* Cara Frontal */
+.card-front {
+    background: var(--card-front-bg);
+    color: rgb(182, 0, 199);
+    transform: rotateY(0deg);
+}
+
+.front-title {
+    font-family: 'Pacifico', cursive;
+    /* Responsive title: scales between 1.6rem and 2.5rem depending on viewport */
+    font-size: clamp(1.6rem, 4vw, 2.5rem);
+    margin-bottom: 1rem;
+}
+
+.front-subtitle {
+    /* Subtitles scale down on small screens */
+    font-size: clamp(0.85rem, 2.5vw, 1rem);
+    font-weight: 600;
+    opacity: 0.9;
+    color: rgb(20, 4, 19);
+}
+
+.gift-icon {
+    /* Gift icon scales for small screens */
+    font-size: clamp(2.2rem, 8vw, 4rem);
+    margin-top: 2rem;
+    animation: pulse 1.5s infinite ease-in-out;
+    cursor: pointer; /* <-- AÑADIDO: El cursor solo en el ícono */
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+
+/*
+ * --- CARA INTERIOR (EL MENSAJE) ---
+ */
+.card-inside {
+    background: transparent;
+    transform: rotateY(180deg);
+    overflow: hidden;
+    cursor: pointer;
+    backface-visibility: hidden;
+}
+
+.message-content {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(5px);
+    border-radius: 20px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    overflow-y: auto;
+}
+
+.inside-title {
+    font-family: 'Pacifico', cursive;
+    /* Responsive inside title */
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    color: rgb(110, 0, 133);
+    margin-bottom: 0.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.inside-subtitle {
+    /* Responsive subtitle and prevent overflow */
+    font-size: clamp(1rem, 3.5vw, 1.2rem);
+    margin-bottom: 1rem;
+    max-width: 90%;
+    padding: 0 0.5rem;
+    color: var(--text-dark);
+    font-weight: 600;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+/* ESTILOS PARA EL VIDEO LOCAL */
+#video-ardilla {
+    width: 100%; /* <-- AÑADIDO: Asegura que ocupe el ancho */
+    max-width: 450px;
+    height: auto; /* <-- CAMBIADO: Dejamos que la altura sea automática */
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
+    border: none;
+}
+
+/*
+ * --- FUEGOS ARTIFICIALES (CSS) ---
+ */
+.fireworks-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    overflow: hidden;
+}
+.fw-particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    opacity: 0;
+    animation: burst 1.5s ease-out infinite;
+}
+@keyframes burst {
+    0% { transform: scale(0.3) translateY(0); opacity: 1; }
+    100% { transform: scale(1.5) translateY(-150px); opacity: 0; }
+}
+.p1 { top: 30%; left: 15%; background: var(--accent-gold); animation-delay: 0.2s; }
+.p2 { top: 50%; left: 10%; background: var(--accent-pink); animation-delay: 0.5s; }
+.p3 { top: 70%; left: 20%; background: var(--accent-gold); animation-delay: 1.1s; }
+.p4 { top: 30%; left: 85%; background: var(--accent-gold); animation-delay: 0.1s; }
+.p5 { top: 50%; left: 90%; background: var(--accent-pink); animation-delay: 0.7s; }
+.p6 { top: 70%; left: 80%; background: var(--accent-gold); animation-delay: 1.3s; }
+
+/* ------------------
+   Responsive tweaks
+   ------------------ */
+@media (max-width: 800px) {
+    .card-container {
+        width: 80vw;
+        height: 55vh;
+        max-width: 420px;
+        max-height: 640px;
+    }
+
+    .card-container.open {
+        width: 92vw;
+        height: 78vh;
+        max-width: 460px;
+        max-height: 84vh;
+    }
+
+    .card-face,
+    .message-content,
+    .front-content {
+        padding: 1rem;
+    }
+
+    .message-content {
+        padding: 0.75rem;
+    }
+
+    #video-ardilla {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+@media (max-width: 420px) {
+    .card-container {
+        width: 92vw;
+        height: auto;
+        max-width: 360px;
+        max-height: none;
+    }
+
+    .card-container.open {
+        width: 96vw;
+        height: 86vh;
+        max-width: 380px;
+    }
+
+    .front-title, .inside-title {
+        line-height: 1.05;
+    }
+
+    .inside-subtitle {
+        font-size: clamp(0.95rem, 4vw, 1.05rem);
+        padding: 0 0.75rem;
+    }
+
+    .gift-icon {
+        font-size: clamp(2rem, 9vw, 3.2rem);
+    }
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Feliz Cumple!</title>
+    
+    <!-- Importamos las fuentes modernas de Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
+
+    <!-- Enlazamos nuestra hoja de estilos -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Video de Fondo -->
+    <video autoplay loop muted id="background-video">
+        <!-- !! CAMBIA ESTA RUTA por tu video de fondo !! -->
+        <source src="media/Fuegos_Artificiales_para_Fondo_Web.mp4" type="video/mp4"> 
+    </video>
+
+    <!--
+     * --- ESTRUCTURA HTML DE LA TARJETA ---
+     -->
+    <div class="card-container" id="cardContainer">
+        <div class="card">
+            <!-- CARA FRONTAL -->
+            <div class="card-face card-front">
+                <h1 class="front-title">Feliz Cumpleañitoooo!!!🦂🦂</h1>
+                <p class="front-subtitle">Toca el regalo para abrir!</p>
+                <div class="gift-icon" id="giftButton">🎁</div>
+            </div>
+            
+            <!-- CARA INTERIOR -->
+            <div class="card-face card-inside" id="cardInside">
+                <!-- Contenido del Mensaje -->
+                <div class="message-content">
+                    <h2 class="inside-title">¡Que pases un hermoso día pequeño abadejo!</h2>
+                    <p class="inside-subtitle">...Y que "Alan" y "Steve" te encuentren 😂</p>
+                    
+                    <video id="video-ardilla" controls>
+                        <source src="media/ardilla busca a alan y steve jajajaja.mp4" type="video/mp4">
+                        Tu navegador no soporta videos HTML5.
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enlazamos nuestro script -->
+    <script src="script.js"></script>
+
+</body>
+</html>

@@ -299,11 +299,11 @@ body::before {
 
 @media (max-width: 420px) {
     .card-container {
-        width: 92vw;
+        width: 72vw;
         /* Keep an explicit height so absolute children can size correctly */
         height: 68vh;
         max-width: 360px;
-        max-height: 86vh;
+        max-height: 50vh;
     }
 
     .card-container.open {

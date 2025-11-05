@@ -300,9 +300,10 @@ body::before {
 @media (max-width: 420px) {
     .card-container {
         width: 92vw;
-        height: auto;
+        /* Keep an explicit height so absolute children can size correctly */
+        height: 68vh;
         max-width: 360px;
-        max-height: none;
+        max-height: 86vh;
     }
 
     .card-container.open {
@@ -322,5 +323,16 @@ body::before {
 
     .gift-icon {
         font-size: clamp(2rem, 9vw, 3.2rem);
+    }
+
+    /* Reduce padding on small screens so content fits */
+    .card-face {
+        padding: 0.8rem;
+        border-radius: 14px;
+    }
+
+    /* Ensure the rotating element has a minimum height */
+    .card {
+        min-height: 240px;
     }
 }
